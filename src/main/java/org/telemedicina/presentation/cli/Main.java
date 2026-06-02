@@ -325,4 +325,4 @@ public class Main {
 
         System.out.println("Fatura paga com sucesso!");
     }
-}1
+}
