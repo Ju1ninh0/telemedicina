@@ -30,7 +30,14 @@ class FaturaTeste {
                 new Cpf("12345678901"),
                 new Email("joao@email.com"),
                 prontuario);
-        medico = new Medico();
+        Medico medico = new Medico(
+                1L,
+                "Dr. João",
+                "CRM12345",
+                "Cardiologia",
+                "82999999999",
+                "joao@hospital.com"
+        );
         consulta = new Consulta("C-001", paciente, medico,
                 LocalDateTime.now(), new BigDecimal("150.00"));
     }
