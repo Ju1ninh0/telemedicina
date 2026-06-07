@@ -6,6 +6,11 @@
       "name": "José Roberio",
       "role": "Arquitetura do sistema + interface CLI + integração geral",
       "github": "Stronguinho/Ju1ninh0"
+    },
+    {
+      "name": "Arthur Zanin",
+      "role": "Fazer classe paciente,prontuario,cpf e email",
+      "github": "ArthurZCM17"
     }
   ]
 }
