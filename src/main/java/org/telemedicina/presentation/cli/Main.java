@@ -24,24 +24,24 @@ public class Main {
 
         while (true) {
 
-            System.out.println("\n==============================");
-            System.out.println("      SISTEMA TELEMEDICINA");
-            System.out.println("==============================");
-            System.out.println("1 - Cadastrar Paciente");
-            System.out.println("2 - Listar Pacientes");
-            System.out.println("3 - Cadastrar Médico");
-            System.out.println("4 - Listar Médicos");
-            System.out.println("5 - Agendar Consulta");
-            System.out.println("6 - Listar Consultas");
-            System.out.println("7 - Gerar Fatura");
-            System.out.println("8 - Listar Faturas");
-            System.out.println("9 - Pagar Fatura");
-            System.out.println("0 - Sair");
-            System.out.print("Opção: ");
-
-            int opcao = Integer.parseInt(scanner.nextLine());
-
             try {
+                System.out.println("\n==============================");
+                System.out.println("      SISTEMA TELEMEDICINA");
+                System.out.println("==============================");
+                System.out.println("1 - Cadastrar Paciente");
+                System.out.println("2 - Listar Pacientes");
+                System.out.println("3 - Cadastrar Médico");
+                System.out.println("4 - Listar Médicos");
+                System.out.println("5 - Agendar Consulta");
+                System.out.println("6 - Listar Consultas");
+                System.out.println("7 - Gerar Fatura");
+                System.out.println("8 - Listar Faturas");
+                System.out.println("9 - Pagar Fatura");
+                System.out.println("0 - Sair");
+                System.out.print("Opção: ");
+
+                int opcao = Integer.parseInt(scanner.nextLine());
+
                 switch (opcao) {
                     case 1 -> cadastrarPaciente();
                     case 2 -> listarPacientes();
@@ -58,8 +58,9 @@ public class Main {
                     }
                     default -> System.out.println("Opção inválida.");
                 }
+
             } catch (Exception e) {
-                System.out.println("\nErro: " + e.getMessage());
+                System.out.println("Erro: entrada inválida.");
             }
         }
     }
@@ -129,15 +130,8 @@ public class Main {
         }
 
         for (int i = 0; i < pacientes.size(); i++) {
-
             Paciente p = pacientes.get(i);
-
-            System.out.println(
-                    (i + 1) + " - " +
-                            p.getNome() +
-                            " | CPF: " +
-                            p.getCpf().getValor()
-            );
+            System.out.println((i + 1) + " - " + p.getNome() + " | CPF: " + p.getCpf().getValor());
         }
     }
 
@@ -163,15 +157,7 @@ public class Main {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
-        Medico medico = new Medico(
-                id,
-                nome,
-                crm,
-                especialidade,
-                telefone,
-                email
-        );
-
+        Medico medico = new Medico(id, nome, crm, especialidade, telefone, email);
         medicos.add(medico);
 
         System.out.println("Médico cadastrado com sucesso!");
@@ -187,59 +173,46 @@ public class Main {
         }
 
         for (int i = 0; i < medicos.size(); i++) {
-
             Medico m = medicos.get(i);
-
-            System.out.println(
-                    (i + 1) + " - " +
-                            m.getNome() +
-                            " | CRM: " +
-                            m.getCrm() +
-                            " | " +
-                            m.getEspecialidade()
-            );
+            System.out.println((i + 1) + " - " + m.getNome() + " | CRM: " + m.getCrm());
         }
     }
 
     private static void agendarConsulta() {
 
-        if (pacientes.isEmpty()) {
-            System.out.println("Cadastre um paciente primeiro.");
-            return;
-        }
-
-        if (medicos.isEmpty()) {
-            System.out.println("Cadastre um médico primeiro.");
+        if (pacientes.isEmpty() || medicos.isEmpty()) {
+            System.out.println("Cadastre pacientes e médicos primeiro.");
             return;
         }
 
         listarPacientes();
-
-        System.out.print("\nEscolha o paciente: ");
-        int pacienteIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        System.out.print("Paciente: ");
+        int p = Integer.parseInt(scanner.nextLine()) - 1;
 
         listarMedicos();
+        System.out.print("Médico: ");
+        int m = Integer.parseInt(scanner.nextLine()) - 1;
 
-        System.out.print("\nEscolha o médico: ");
-        int medicoIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        if (p < 0 || p >= pacientes.size() || m < 0 || m >= medicos.size()) {
+            System.out.println("Índice inválido.");
+            return;
+        }
 
-        System.out.print("ID da consulta: ");
-        String idConsulta = scanner.nextLine();
+        System.out.print("ID consulta: ");
+        String id = scanner.nextLine();
 
-        System.out.print("Valor da consulta: ");
+        System.out.print("Valor: ");
         BigDecimal valor = new BigDecimal(scanner.nextLine());
 
-        Consulta consulta = new Consulta(
-                idConsulta,
-                pacientes.get(pacienteIndex),
-                medicos.get(medicoIndex),
+        consultas.add(new Consulta(
+                id,
+                pacientes.get(p),
+                medicos.get(m),
                 LocalDateTime.now(),
                 valor
-        );
+        ));
 
-        consultas.add(consulta);
-
-        System.out.println("Consulta agendada com sucesso!");
+        System.out.println("Consulta agendada!");
     }
 
     private static void listarConsultas() {
@@ -251,13 +224,12 @@ public class Main {
             return;
         }
 
-        for (Consulta consulta : consultas) {
-
+        for (Consulta c : consultas) {
             System.out.println(
-                    "ID: " + consulta.getId() +
-                            " | Paciente: " + consulta.getPaciente().getNome() +
-                            " | Médico: " + consulta.getMedico().getNome() +
-                            " | Valor: R$ " + consulta.getValor()
+                    "ID: " + c.getId() +
+                            " | Paciente: " + c.getPaciente().getNome() +
+                            " | Médico: " + c.getMedico().getNome() +
+                            " | Valor: " + c.getValor()
             );
         }
     }
@@ -271,20 +243,20 @@ public class Main {
 
         listarConsultas();
 
-        System.out.print("\nEscolha a consulta: ");
-        int indice = Integer.parseInt(scanner.nextLine()) - 1;
+        System.out.print("Consulta: ");
+        int i = Integer.parseInt(scanner.nextLine()) - 1;
 
-        System.out.print("ID da fatura: ");
-        String idFatura = scanner.nextLine();
+        if (i < 0 || i >= consultas.size()) {
+            System.out.println("Índice inválido.");
+            return;
+        }
 
-        Fatura fatura = new Fatura(
-                idFatura,
-                consultas.get(indice)
-        );
+        System.out.print("ID fatura: ");
+        String id = scanner.nextLine();
 
-        faturas.add(fatura);
+        faturas.add(new Fatura(id, consultas.get(i)));
 
-        System.out.println("Fatura criada com sucesso!");
+        System.out.println("Fatura criada!");
     }
 
     private static void listarFaturas() {
@@ -297,15 +269,8 @@ public class Main {
         }
 
         for (int i = 0; i < faturas.size(); i++) {
-
             Fatura f = faturas.get(i);
-
-            System.out.println(
-                    (i + 1) +
-                            " | ID: " + f.getId() +
-                            " | Valor: R$ " + f.getValor() +
-                            " | Status: " + f.getStatus()
-            );
+            System.out.println((i + 1) + " | ID: " + f.getId() + " | Valor: " + f.getValor());
         }
     }
 
@@ -318,11 +283,16 @@ public class Main {
 
         listarFaturas();
 
-        System.out.print("\nEscolha a fatura: ");
-        int indice = Integer.parseInt(scanner.nextLine()) - 1;
+        System.out.print("Fatura: ");
+        int i = Integer.parseInt(scanner.nextLine()) - 1;
 
-        faturas.get(indice).pagar();
+        if (i < 0 || i >= faturas.size()) {
+            System.out.println("Índice inválido.");
+            return;
+        }
 
-        System.out.println("Fatura paga com sucesso!");
+        faturas.get(i).pagar();
+
+        System.out.println("Fatura paga!");
     }
 }

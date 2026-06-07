@@ -1,0 +1,11 @@
+{
+  "project": "Sistema de Telemedicina",
+  "description": "Projeto acadêmico de agendamento e gestão de consultas médicas",
+  "team": [
+    {
+      "name": "José Roberio",
+      "role": "Arquitetura do sistema + interface CLI + integração geral",
+      "github": "Stronguinho/Ju1ninh0"
+    }
+  ]
+}
