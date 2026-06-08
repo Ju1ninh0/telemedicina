@@ -11,6 +11,10 @@
       "name": "Arthur Zanin",
       "role": "Fazer classe paciente,prontuario,cpf e email",
       "github": "ArthurZCM17"
-    }
+    },
+    {
+      "name": "Aurelio Miguel",
+      "role": "Fazer classe Fatura,Pagamento,Repository,H2 database e pesistencia"
+      "github": "AurelioM20"
   ]
 }
