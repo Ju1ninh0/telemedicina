@@ -16,9 +16,11 @@
       "name": "Aurelio Miguel",
       "role": "Fazer classe Fatura,Pagamento,Repository,H2 database e pesistencia"
       "github": "AurelioM20"
+    },
+    {
+      "name": "Tarso Appelt",
+      "role": "Fazer classe Consulta, Medico, Agendamento, Regras de horarios, Aggregate Root"
+      "github": "123Tarso"
     }
-    "name": "Tarso Appelt",
-    "role": "Fazer classe Consulta, Medico, Agendamento, Regras de horarios, Aggregate Root
-    "github": 123Tarso
   ]
 }
